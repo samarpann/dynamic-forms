@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 const DynamicForm = ({ formType }) => {
   const [formFields, setFormFields] = useState([]);
   const [formData, setFormData] = useState({});
@@ -15,7 +17,7 @@ const DynamicForm = ({ formType }) => {
 
     const fetchForm = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/forms/${formType}`);
+        const res = await axios.get(`${API_BASE}/api/forms/${formType}`);
         setFormFields(res.data.fields);
         setFormData({});
         setMessage('');
@@ -39,7 +41,7 @@ const DynamicForm = ({ formType }) => {
       const formName = prompt("Enter new form type (e.g. college-form):");
       if (!formName) return;
       try {
-        await axios.post(`http://localhost:5000/api/forms/new`, {
+        await axios.post(`${API_BASE}/api/forms/new`, {
           type: formName,
           fields: formFields,
         });
@@ -47,18 +49,18 @@ const DynamicForm = ({ formType }) => {
         setFormFields([]);
       } catch (err) {
         console.error(err);
-        setMessage(' Failed to create form');
+        setMessage('❌ Failed to create form');
       }
       return;
     }
 
     try {
-      await axios.post(`http://localhost:5000/api/forms/${formType}`, formData);
+      await axios.post(`${API_BASE}/api/forms/${formType}`, formData);
       setMessage('✅ Form data submitted successfully');
       setFormData({});
     } catch (err) {
       console.error(err);
-      setMessage(' Failed to submit data');
+      setMessage('❌ Failed to submit data');
     }
   };
 
