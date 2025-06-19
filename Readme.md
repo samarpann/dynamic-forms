@@ -25,17 +25,9 @@ This is a dynamic form builder web application built using **MongoDB, Express, R
 
 ## 🛠 Setup Instructions
 
-### Backend
-
-```bash
-cd backend
-npm install
-node server.js
 
 
 Made with ❤️ by Samarpan Singh
 Interview Project — Dynamic Form Builder
 
-yaml
-Copy
-Edit
+
