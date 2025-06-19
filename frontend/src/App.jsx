@@ -46,7 +46,8 @@ function App() {
 
   const fetchFormTypes = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/forms');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/forms`)
+;
       setFormTypes(res.data);
     } catch (error) {
       console.error('Failed to fetch form types:', error);
