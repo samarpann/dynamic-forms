@@ -12,7 +12,6 @@ const AdminPanel = () => {
     const updatedFields = [...fields];
     updatedFields[index][key] = value;
 
-    // Reset options if type changes away from select/multiselect
     if (key === 'type' && value === 'text') {
       updatedFields[index].options = [];
     }
@@ -57,17 +56,18 @@ const AdminPanel = () => {
 
     try {
       const payload = {
-        type: formType.trim().toLowerCase().replace(/\s+/g, '-'), // e.g., railway-form
+        type: formType.trim().toLowerCase().replace(/\s+/g, '-'),
         fields
       };
 
-      const response = await axios.post('http://localhost:5000/api/forms/new', payload);
+      // ✅ use VITE_API_URL from environment variable
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/forms/new`, payload);
 
-      setMessage('Form type created successfully!');
+      setMessage('✅ Form created successfully!');
       setFormType('');
       setFields([{ label: '', type: 'text', required: false, options: [] }]);
     } catch (error) {
-      setMessage('Error creating form: ' + error.message);
+      setMessage('❌ Error creating form: ' + error.message);
     }
   };
 
