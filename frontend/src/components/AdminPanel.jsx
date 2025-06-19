@@ -51,23 +51,36 @@ const AdminPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formType.trim()) {
-      return setMessage('Form type is required');
+      return setMessage('⚠️ Form type is required');
     }
 
+    const finalType = formType.trim().toLowerCase().replace(/\s+/g, '-');
+
     try {
+      // Step 1: Get existing form types
+      const existingTypesRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/forms`);
+      const existingTypes = existingTypesRes.data;
+
+      // Step 2: Check if type already exists
+      if (existingTypes.includes(finalType)) {
+        setMessage(`❌ A form with the type "${finalType}" already exists.`);
+        return;
+      }
+
+      // Step 3: Submit the form
       const payload = {
-        type: formType.trim().toLowerCase().replace(/\s+/g, '-'),
-        fields
+        type: finalType,
+        fields,
       };
 
-      // ✅ use VITE_API_URL from environment variable
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/forms/new`, payload);
 
       setMessage('✅ Form created successfully!');
       setFormType('');
       setFields([{ label: '', type: 'text', required: false, options: [] }]);
     } catch (error) {
-      setMessage('❌ Error creating form: ' + error.message);
+      console.error("❌ Error creating form:", error);
+      setMessage('❌ Error creating form: ' + (error.response?.data?.error || error.message));
     }
   };
 
