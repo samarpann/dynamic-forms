@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 
-const FormDataSchema = new mongoose.Schema({
-  type: String, // "Railway Form"
-  data: {} // actual submitted form data (flexible)
-});
+const FormDataSchema = new mongoose.Schema(
+  {
+    type: { type: String, required: true },
+    data: { type: Object, required: true }
+  },
+  {
+    timestamps: true // adds createdAt and updatedAt
+  }
+);
 
 module.exports = mongoose.model('FormData', FormDataSchema);
