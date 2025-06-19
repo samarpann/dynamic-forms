@@ -14,7 +14,7 @@ app.use(express.json());
 app.use('/api/forms', formRoutes);
 
 // Connect MongoDB
-mongoose.connect('mongodb://localhost:27017/dynamic-forms', {
+mongoose.connect('mongodb+srv://samarpan:samarpan@cluster0.vfpghba.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
