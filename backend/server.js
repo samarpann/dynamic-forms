@@ -7,14 +7,7 @@ const formRoutes = require('./routes/formRoutes');
 require('dotenv').config(); // ✅ Load environment variables from .env
 
 const app = express();
-const corsOptions = {
-  origin: "https://dynamic-forms-5b87frrbi-samarpans-projects-c0e6b05a.vercel.app", // your Vercel frontend
-  methods: "GET,POST,PUT,DELETE",
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-
+app.use(cors());
 app.use(express.json());
 
 // ✅ API Routes
